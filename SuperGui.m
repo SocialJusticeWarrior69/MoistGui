@@ -1,4 +1,3 @@
-%%This is an example of seeing changes in the code.
 function varargout = SuperGui(varargin)
 % SUPERGUI MATLAB code for SuperGui.fig
 %      SUPERGUI, by itself, creates a new SUPERGUI or raises the existing
@@ -23,9 +22,25 @@ function varargout = SuperGui(varargin)
 
 % Edit the above text to modify the response to help SuperGui
 
-% Last Modified by GUIDE v2.5 24-Oct-2017 23:43:57
+% Last Modified by GUIDE v2.5 27-Oct-2017 18:23:57
 
 % Begin initialization code - DO NOT EDIT
+
+%frequencies of each note
+fA = 440.00; % Master Tuned to A 440
+fAb = fA*2^(-1/12);
+fG = fAb*2^(-1/12);
+fGb = fG*2^(-1/12);
+fF = fGb*2^(-1/12);
+fE = fF*2^(-1/12);
+fEb = fE*2^(-1/12);
+fD = fEb*2^(-1/12);
+fDb = fD*2^(-1/12);
+fC = fDb*2^(-1/12);
+fBb = fA*2^(1/12);
+fB = fBb*2^(1/12);
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
                    'gui_Singleton',  gui_Singleton, ...
@@ -297,9 +312,230 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 
 
-% --- Executes on button press in pushbutton2.
-function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
+% --- Executes on button press in RecordButton.
+function RecordButton_Callback(hObject, eventdata, handles)
+% hObject    handle to RecordButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+AudioInput = audiorecorder(8000,8,1);
+if get(hObject,'Value') == 1 
+    %Records audio for two seconds
+    disp('Start');
+    recordblocking(AudioInput,2);
+    disp('End');
+else
+end
+
+
+
+% --- Executes on button press in PlayButton.
+function PlayButton_Callback(hObject, eventdata, handles)
+% hObject    handle to PlayButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+AudioInput = get(handles.RecordButton, 'Value');
+if get(hObject,'Value') == 1
+    p = play(AudioInput);
+else
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% PUSH BUTTON KEYS %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% C key.
+function Ckey_Callback(hObject, eventdata, handles)
+% hObject    handle to Ckey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+octave = 1;
+while get(hObject,'Value') == 1
+soundsc(10*sin(2*pi*octave*fC),44100,16)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+      disp(fC)
+    break;
+  end
+  ...
+end
+
+
+
+% Db Key.
+function DbKey_Callback(hObject, eventdata, handles)
+% hObject    handle to DbKey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% D key.
+function Dkey_Callback(hObject, eventdata, handles)
+% hObject    handle to Dkey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% Eb Key.
+function EbKey_Callback(hObject, eventdata, handles)
+% hObject    handle to EbKey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% E key.
+function Ekey_Callback(hObject, eventdata, handles)
+% hObject    handle to Ekey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% F key.
+function Fkey_Callback(hObject, eventdata, handles)
+% hObject    handle to Fkey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% Gb Key.
+function GbKey_Callback(hObject, eventdata, handles)
+% hObject    handle to GbKey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% G key.
+function Gkey_Callback(hObject, eventdata, handles)
+% hObject    handle to Gkey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% Ab Key.
+function AbKey_Callback(hObject, eventdata, handles)
+% hObject    handle to AbKey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% A key.
+function Akey_Callback(hObject, eventdata, handles)
+% hObject    handle to Akey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% Bb Key.
+function BbKey_Callback(hObject, eventdata, handles)
+% hObject    handle to BbKey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+
+% B key.
+function Bkey_Callback(hObject, eventdata, handles)
+% hObject    handle to Bkey (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+while get(hObject,'Value') == 1
+disp('Pressed')
+pause(0.2)
+  if get(hObject, 'Value') == 0
+      disp('Stop')
+    break;
+  end
+  ...
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% PUSH BUTTON KEYS %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% --- Executes on button press in togglebutton2.
+function togglebutton2_Callback(hObject, eventdata, handles)
+% hObject    handle to togglebutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+% Hint: get(hObject,'Value') returns toggle state of togglebutton2
