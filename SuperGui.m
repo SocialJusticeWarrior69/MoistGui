@@ -22,24 +22,9 @@ function varargout = SuperGui(varargin)
 
 % Edit the above text to modify the response to help SuperGui
 
-% Last Modified by GUIDE v2.5 27-Oct-2017 18:23:57
+% Last Modified by GUIDE v2.5 31-Oct-2017 22:06:55
 
 % Begin initialization code - DO NOT EDIT
-
-%frequencies of each note
-fA = 440.00; % Master Tuned to A 440
-fAb = fA*2^(-1/12);
-fG = fAb*2^(-1/12);
-fGb = fG*2^(-1/12);
-fF = fGb*2^(-1/12);
-fE = fF*2^(-1/12);
-fEb = fE*2^(-1/12);
-fD = fEb*2^(-1/12);
-fDb = fD*2^(-1/12);
-fC = fDb*2^(-1/12);
-fBb = fA*2^(1/12);
-fB = fBb*2^(1/12);
-%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -73,6 +58,50 @@ handles.output = hObject;
 % Update handles structure
 guidata(hObject, handles);
 
+%frequencies of each note
+fA = 440.00; % Master Tuned to A 440
+fAb = fA*2^(-1/12);
+fG = fAb*2^(-1/12);
+fGb = fG*2^(-1/12);
+fF = fGb*2^(-1/12);
+fE = fF*2^(-1/12);
+fEb = fE*2^(-1/12);
+fD = fEb*2^(-1/12);
+fDb = fD*2^(-1/12);
+fC = fDb*2^(-1/12);
+fBb = fA*2^(1/12);
+fB = fBb*2^(1/12);
+handles.fA = fA;
+handles.fAb = fAb;
+handles.fG = fG;
+handles.fGb = fGb;
+handles.fF = fF;
+handles.fE = fE;
+handles.fEb = fEb;
+handles.fD = fD;
+handles.fDb = fDb;
+handles.fC = fC;
+handles.fBb = fBb;
+handles.fB = fB;
+%amplitude of signal
+amp = 10;
+handles.amp = amp;
+%Sampling Frequency
+fSample = 44100;
+handles.fSample = fSample;
+%Audio Time
+tmax = 0.25;
+handles.tmax = tmax;
+%Points of Sample
+npts = fSample*tmax;
+handles.npts = npts;
+%Octave Set
+Octave = 0;
+handles.Octave = Octave;
+
+guidata(hObject,handles);
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % This sets up the initial plot - only do when we are invisible
 % so window can get raised using SuperGui.
 if strcmp(get(hObject,'Visible'),'off')
@@ -86,7 +115,7 @@ end
 % --- Outputs from this function are returned to the command line.
 function varargout = SuperGui_OutputFcn(hObject, eventdata, handles)
 % varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
+% hObject handle to figure
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -350,15 +379,12 @@ function Ckey_Callback(hObject, eventdata, handles)
 % hObject    handle to Ckey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-octave = 1;
-while get(hObject,'Value') == 1
-soundsc(10*sin(2*pi*octave*fC),44100,16)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-      disp(fC)
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fC*tvector);
+sound(y,handles.fSample)
+else
 end
 
 
@@ -368,14 +394,12 @@ function DbKey_Callback(hObject, eventdata, handles)
 % hObject    handle to DbKey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fDb*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % D key.
@@ -383,14 +407,12 @@ function Dkey_Callback(hObject, eventdata, handles)
 % hObject    handle to Dkey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fD*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % Eb Key.
@@ -398,14 +420,12 @@ function EbKey_Callback(hObject, eventdata, handles)
 % hObject    handle to EbKey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fEb*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % E key.
@@ -413,14 +433,12 @@ function Ekey_Callback(hObject, eventdata, handles)
 % hObject    handle to Ekey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fE*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % F key.
@@ -428,14 +446,12 @@ function Fkey_Callback(hObject, eventdata, handles)
 % hObject    handle to Fkey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fF*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % Gb Key.
@@ -443,14 +459,12 @@ function GbKey_Callback(hObject, eventdata, handles)
 % hObject    handle to GbKey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fGb*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % G key.
@@ -458,14 +472,12 @@ function Gkey_Callback(hObject, eventdata, handles)
 % hObject    handle to Gkey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fG*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % Ab Key.
@@ -473,14 +485,12 @@ function AbKey_Callback(hObject, eventdata, handles)
 % hObject    handle to AbKey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fAb*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % A key.
@@ -488,14 +498,12 @@ function Akey_Callback(hObject, eventdata, handles)
 % hObject    handle to Akey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fA*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % Bb Key.
@@ -503,14 +511,12 @@ function BbKey_Callback(hObject, eventdata, handles)
 % hObject    handle to BbKey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fBb*tvector);
+sound(y,handles.fSample)
+else
 end
 
 % B key.
@@ -518,24 +524,40 @@ function Bkey_Callback(hObject, eventdata, handles)
 % hObject    handle to Bkey (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-while get(hObject,'Value') == 1
-disp('Pressed')
-pause(0.2)
-  if get(hObject, 'Value') == 0
-      disp('Stop')
-    break;
-  end
-  ...
+if get(hObject,'Value') == 1
+t=linspace(0,handles.tmax,handles.npts);
+tvector = 2*pi*t;
+y = handles.amp*sin(handles.fB*tvector);
+sound(y,handles.fSample)
+else
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% PUSH BUTTON KEYS %%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% --- Executes on button press in togglebutton2.
-function togglebutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to togglebutton2 (see GCBO)
+% --- Executes on button press in OctaveDown.
+function OctaveDown_Callback(hObject, eventdata, handles)
+% hObject    handle to OctaveDown (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+if get(hObject,'Value') == 1
+    handles.Octave = handles.Octave -1;
+    guidata(hObject, handles);
+    disp(handles.Octave)
+else
+end
+% Hint: get(hObject,'Value') returns toggle state of OctaveDown
 
-% Hint: get(hObject,'Value') returns toggle state of togglebutton2
+
+% --- Executes on button press in OctaveUp.
+function OctaveUp_Callback(hObject, eventdata, handles)
+% hObject    handle to OctaveUp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+if get(hObject,'Value') == 1
+    handles.Octave = handles.Octave + 1;
+    guidata(hObject, handles);
+    disp(handles.Octave)
+else
+end
+% Hint: get(hObject,'Value') returns toggle state of OctaveUp
